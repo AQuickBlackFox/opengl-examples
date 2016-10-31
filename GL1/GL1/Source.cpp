@@ -14,45 +14,29 @@ const GLchar* vertexSource = GLSL(
 	in vec2 position;
 	in vec3 color;
 	out vec3 Color;
+	uniform mat4 trans;
 	void main()
 	{
 		Color = color;
-		mat4 mat;
-		mat[0] = vec4(1.0f, 0.0f, 0.0f, 0.0f);
-		mat[1] = vec4(0.0f, 1.0f, 0.0f, 0.0f);
-		mat[2] = vec4(0.0f, 0.0f, 0.0f, 0.0f);
-		mat[3] = vec4(0.1f, 0.1f, 0.1f, 1.0f);
-		gl_Position = mat*vec4(position, 0.0, 1.0);
+		gl_Position = trans*vec4(position, 0.0, 1.0);
 	}
 	);
 
-/*
-const GLchar* vertexSource =
-"#version 150 core\n"
-"in vec2 position;"
-"in vec3 color;"
-"out vec3 Color;"
-"void main()"
-"{"
-"	Color = color;"
-"   mat4 mat;"
-"   "
-"   gl_Position = vec4(position, 0.0, 1.0) + vec4(0.1f, 0.1f, 0.0f, 0.0f);"
-"}";
-*/
-const GLchar* fragmentSource =
-"#version 150 core\n"
-"in vec3 Color;"
-"out vec4 outColor;"
-"void main()"
-"{"
-"    outColor = vec4(Color, 1.0);"
-"}";
+const GLchar* fragmentSource = GLSL(
+	#version 150 core\n
+	in vec3 Color;
+	out vec4 outColor;
+	void main()
+	{
+		outColor = vec4(Color, 1.0);
+	}
+);
 
 GLuint elements[] = {
 	0, 1, 2,
 	2, 3, 0
 };
+
 
 int main(){
 	glfwInit();
@@ -87,7 +71,10 @@ int main(){
 	};
 
 	glm::mat4 trans;
-	trans = glm::rotate(trans, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	trans[0] = glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+	trans[1] = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+	trans[2] = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+	trans[3] = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -122,11 +109,13 @@ int main(){
 	glEnableVertexAttribArray(colAttrib);
 	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
 
+	GLint uniTrans = glGetUniformLocation(shaderProgram, "trans");
+	glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(trans));
+
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	while (!glfwWindowShouldClose(window)){
-
 
 		// Draw a triangle from the 3 vertices
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
