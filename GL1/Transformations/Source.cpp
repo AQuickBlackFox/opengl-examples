@@ -11,15 +11,16 @@
 #define GLSL(source) #source
 
 const GLchar* vertexSource = GLSL(
-	#version 150 core\n
-	in vec2 position;
+#version 150 core\n
+in vec2 position;
 in vec3 color;
 out vec3 Color;
 uniform mat4 trans;
+uniform mat4 scale;
 void main()
 {
 	Color = color;
-	gl_Position = trans*vec4(position, 0.0, 1.0);
+	gl_Position = scale * trans*vec4(position, 0.0, 1.0);
 }
 );
 
@@ -99,8 +100,11 @@ int main(){
 	glm::vec4 translate = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 	transform[3] = translate;
 
-	glm::vec4 scale;
-	scale = glm::vec4(0.08f, 0.08f, 0.0f, 1.0f);
+	glm::mat4 scale;
+	scale[0] = glm::vec4(0.08f, 0.0f, 0.0f, 0.0f);
+	scale[1] = glm::vec4(0.0f, 0.08f, 0.0f, 0.0f);
+	scale[2] = glm::vec4(0.0f, 0.0f, 0.08f, 0.0f);
+	scale[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -138,25 +142,28 @@ int main(){
 	GLint uniTrans = glGetUniformLocation(shaderProgram, "trans");
 	glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(transform));
 
+	GLuint uniScale = glGetUniformLocation(shaderProgram, "scale");
+	glUniformMatrix4fv(uniScale, 1, GL_FALSE, glm::value_ptr(scale));
+
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glm::mat4 R[3]; // Rotate w.r.t X, Y, Z axis by 30 degrees
 
 
-	R[0][0] = scale * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
-	R[0][1] = scale * glm::vec4(0.0f, cosf(glm::radians(30.0f)), -sinf(glm::radians(30.0f)), 0.0f);
-	R[0][2] = scale * glm::vec4(0.0f, -sinf(glm::radians(30.0f)), cosf(glm::radians(30.0f)), 0.0f);
+	R[0][0] = glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+	R[0][1] = glm::vec4(0.0f, cosf(glm::radians(30.0f)), -sinf(glm::radians(30.0f)), 0.0f);
+	R[0][2] = glm::vec4(0.0f, -sinf(glm::radians(30.0f)), cosf(glm::radians(30.0f)), 0.0f);
 	R[0][3] = translate;
 
-	R[1][0] = scale * glm::vec4(cosf(glm::radians(30.0f)), 0.0f, -sinf(glm::radians(30.0f)), 0.0f);
-	R[1][0] = scale * glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-	R[1][0] = scale * glm::vec4(sinf(glm::radians(30.0f)), 0.0f, -cosf(glm::radians(30.0f)), 0.0f);
+	R[1][0] = glm::vec4(cosf(glm::radians(30.0f)), 0.0f, -sinf(glm::radians(30.0f)), 0.0f);
+	R[1][0] = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+	R[1][0] = glm::vec4(sinf(glm::radians(30.0f)), 0.0f, -cosf(glm::radians(30.0f)), 0.0f);
 	R[1][3] = translate;
 
-	R[2][0] = scale * glm::vec4(cosf(glm::radians(30.0f)), sinf(glm::radians(30.0f)), 0.0f, 0.0f);
-	R[2][1] = scale * glm::vec4(-sinf(glm::radians(30.0f)), cosf(glm::radians(30.0f)), 0.0f, 0.0f);
-	R[2][2] = scale * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+	R[2][0] = glm::vec4(cosf(glm::radians(30.0f)), sinf(glm::radians(30.0f)), 0.0f, 0.0f);
+	R[2][1] = glm::vec4(-sinf(glm::radians(30.0f)), cosf(glm::radians(30.0f)), 0.0f, 0.0f);
+	R[2][2] = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
 	R[2][3] = translate;
 
 	uint32_t i = 0;
