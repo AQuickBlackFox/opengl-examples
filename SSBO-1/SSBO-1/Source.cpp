@@ -14,9 +14,9 @@ float vertices[] = {
 };
 
 float colors[] = {
-	1.0f, 0.0f, 0.0f, 1.0f,
-	1.0f, 0.0f, 0.0f, 1.0f,
-	1.0f, 0.0f, 0.0f, 1.0f,
+	0.5f, 0.0f, 0.0f, 1.0f,
+	0.5f, 0.0f, 0.0f, 1.0f,
+	0.5f, 0.0f, 0.0f, 1.0f,
 };
 
 const GLchar* vSrc = GLSL(
@@ -25,22 +25,19 @@ const GLchar* vSrc = GLSL(
 	{
 		vec2 position[];
 	};
-	layout(binding = 1) buffer pColor
-	{
-		float color[];
-	};
-	out float Color;
 	void main(){
 		gl_Position = vec4(position[gl_VertexID], 0.0f, 1.0f);
-		Color = color[gl_VertexID];
 	}
 );
 
 const GLchar* pSrc = GLSL(
 	#version 430 core \n
-	in float Color;
+	layout(binding = 1) buffer pColor
+	{
+		float color[];
+	};
 	void main(){
-		gl_FragColor = vec4(Color, 0.0f, 0.0f, 1.0f);
+		gl_FragColor = vec4(color[gl_PrimitiveID], 0.0f, 0.0f, 1.0f);
 	}
 );
 
@@ -81,7 +78,7 @@ int main(){
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, vbo);
 	glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, vbo);
-
+	
 	GLuint pbo;
 	glGenBuffers(1, &pbo);
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, pbo);
