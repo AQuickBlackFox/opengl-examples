@@ -1,0 +1,35 @@
+﻿Build started 2/16/2017 5:12:15 AM.
+     1>Project "J:\opengl-examples\ComputeShaders\VectorAdd\VectorAdd.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"J:\opengl-examples\ComputeShaders\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
+         Source.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\opengl-examples\ComputeShaders\Debug\VectorAdd.exe" /INCREMENTAL /NOLOGO /LIBPATH:"J:\opengl-examples\ComputeShaders\lib-vc2013" opengl32.lib glew32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"J:\opengl-examples\ComputeShaders\Debug\VectorAdd.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\opengl-examples\ComputeShaders\Debug\VectorAdd.lib" /MACHINE:X86 Debug\Source.obj
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__glewInit@0 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol _glfwInit referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol _glfwTerminate referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol _glfwWindowHint referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol _glfwCreateWindow referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol _glfwMakeContextCurrent referenced in function _main
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewBindBuffer
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewBufferData
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewGenBuffers
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewMapBuffer
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewUnmapBuffer
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewAttachShader
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewCompileShader
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewCreateProgram
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewCreateShader
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewLinkProgram
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewShaderSource
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewUseProgram
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewDispatchCompute
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewMemoryBarrier
+     1>Source.obj : error LNK2001: unresolved external symbol __imp____glewBindBufferBase
+     1>Source.obj : error LNK2001: unresolved external symbol __imp__glewExperimental
+     1>J:\opengl-examples\ComputeShaders\Debug\VectorAdd.exe : fatal error LNK1120: 22 unresolved externals
+     1>Done Building Project "J:\opengl-examples\ComputeShaders\VectorAdd\VectorAdd.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.94
